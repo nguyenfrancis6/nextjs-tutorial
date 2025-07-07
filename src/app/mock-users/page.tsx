@@ -1,4 +1,5 @@
 import { revalidatePath } from "next/cache";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 type MockUser = {
   id: number;
@@ -6,6 +7,14 @@ type MockUser = {
 };
 
 export default async function MockUsers() {
+   const authObj = await auth();
+   const userObj = await currentUser();
+
+   console.log({
+    authObj, 
+    userObj,
+   })
+
   const res = await fetch("https://686c15fc14219674dcc733a8.mockapi.io/users");
   const users = await res.json();
 

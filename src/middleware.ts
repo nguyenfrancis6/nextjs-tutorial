@@ -1,6 +1,11 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+const isProtectedRoute = createRouteMatcher(["/mock-users"]);
+
+// if a user tries to access this route, it will prompt the user to sign in
+export default clerkMiddleware(async (auth, req) => {
+    if(isProtectedRoute(req)) await auth.protect();
+});
 
 export const config = {
   matcher: [
@@ -10,3 +15,4 @@ export const config = {
     '/(api|trpc)(.*)',
   ],
 };
+
