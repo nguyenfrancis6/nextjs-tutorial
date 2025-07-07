@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Navigation } from "./components/navigation";
 
@@ -24,19 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="bg-slate-900 text-white p-4 text-center">
-          {/* <p>Welcome to Next.js 15 Crash Course</p> */}
-          <Navigation />
-        </header>
-        {children}
-        <footer className="bg-slate-900 text-white p-4 text-center">
-          <p>Footer</p>
-        </footer>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <header className="bg-slate-900 text-white p-4 text-center">
+            {/* <p>Welcome to Next.js 15 Crash Course</p> */}
+            <Navigation />
+          </header>
+          {children}
+          <footer className="bg-slate-900 text-white p-4 text-center">
+            <p>Footer</p>
+          </footer>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
